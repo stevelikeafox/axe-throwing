@@ -48,6 +48,12 @@ export default class App extends Component {
     };
   }
 
+  componentDidMount(currentPlayer) {
+    let playe = this.state.currentPlayer;
+    let play = document.getElementById(playe);
+    play.style.display = "block";
+  }
+
   zeroPoints = () => {
     let players = [];
     let currentPlayer = this.state.currentPlayer;
@@ -67,6 +73,7 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
+    this.playerchange(currentPlayer, numPlayers);
   };
 
   onePoints = () => {
@@ -90,6 +97,7 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
+    this.playerchange(currentPlayer, numPlayers);
   };
 
   threePoints = () => {
@@ -113,6 +121,7 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
+    this.playerchange(currentPlayer, numPlayers);
   };
 
   fivePoints = () => {
@@ -136,6 +145,7 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
+    this.playerchange(currentPlayer, numPlayers);
   };
 
   sevenPoints = () => {
@@ -158,10 +168,36 @@ export default class App extends Component {
       this.state.players[currentPlayer].totalScore + 7;
     this.setState({ players });
 
-    console.log(players[currentPlayer]);
+    //  console.log(players[currentPlayer]);
+    this.playerchange(currentPlayer, numPlayers);
   };
 
+  playerchange(currentPlayer, numPlayers) {
+    let nextPlayer = document.getElementById(currentPlayer + 1);
+    let previousPlayer = document.getElementById(currentPlayer);
+    let reset = document.getElementById(0);
+    if (currentPlayer === numPlayers - 1) {
+      previousPlayer.style.display = "none";
+      reset.style.display = "block";
+      console.log("New Round");
+      console.log(numPlayers);
+      console.log(currentPlayer);
+    } else {
+      console.log("Next Player");
+
+      nextPlayer.style.display = "block";
+      previousPlayer.style.display = "none";
+      console.log(numPlayers);
+      // console.log(previousplay);
+      console.log(currentPlayer);
+    }
+  }
+
   render() {
+    var shown = {
+      display: this.state.shown ? "block" : "none"
+    };
+
     return (
       <div>
         <h1>Axe Thorwers Anonymous</h1>
@@ -171,18 +207,34 @@ export default class App extends Component {
         <h2>Scores</h2>
         <ul>
           {this.state.players.map(players => (
-            <li key={players.id}>
+            <li key={players.id} style={shown} id={players.id}>
               <p>
                 Player: {players.firstName} {players.surname}
-                {/* <p> id: {players.id} </p> */}
               </p>
+              <p> id: {players.id} </p>
               {/* <p>Current Score: {players.totalScore}</p> */}
               <p>Throw: {players.throwNumber}</p>
-              <Button title={"No Points"} task={this.zeroPoints} />
-              <Button title={"1 point"} task={this.onePoints} />
+              <Button
+                title={"No Points"}
+                task={this.zeroPoints}
+                playerid={players.id}
+              />
+              <Button
+                title={"1 point"}
+                task={this.onePoints}
+                playerid={players.id}
+              />
               <Button title={"3 points"} task={this.threePoints} />
-              <Button title={"5 points"} task={this.fivePoints} />
-              <Button title={"7 points"} task={this.sevenPoints} />
+              <Button
+                title={"5 points"}
+                task={this.fivePoints}
+                playerid={players.id}
+              />
+              <Button
+                title={"7 points"}
+                task={this.sevenPoints}
+                playerid={players.id}
+              />
             </li>
           ))}
         </ul>
