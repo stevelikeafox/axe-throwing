@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Button from "./components/Buttons";
 import Scoreboard from "./components/Scoreboard";
+import M from "materialize-css";
+import "./App.css";
 
 export default class App extends Component {
   constructor() {
@@ -12,39 +14,90 @@ export default class App extends Component {
           firstName: "Stephen",
           surname: "Willmot",
           totalScore: 0,
+          roundOne: 0,
+          roundTwo: 0,
+          roundThree: 0,
+          roundFour: 0,
+          roundFive: 0,
+          roundSix: 0,
+          roundSeven: 0,
+          roundEight: 0,
+          roundNine: 0,
+          roundTen: 0,
           throwNumber: 1
         },
+
         {
           id: 1,
-          firstName: "James",
-          surname: "Clark",
+          firstName: "Andrew",
+          surname: "Todd",
           totalScore: 0,
+          roundOne: 0,
+          roundTwo: 0,
+          roundThree: 0,
+          roundFour: 0,
+          roundFive: 0,
+          roundSix: 0,
+          roundSeven: 0,
+          roundEight: 0,
+          roundNine: 0,
+          roundTen: 0,
           throwNumber: 1
         },
         {
           id: 2,
-          firstName: "Andrew",
-          surname: "Todd",
+          firstName: "Adam",
+          surname: "Sime",
           totalScore: 0,
+          roundOne: 0,
+          roundTwo: 0,
+          roundThree: 0,
+          roundFour: 0,
+          roundFive: 0,
+          roundSix: 0,
+          roundSeven: 0,
+          roundEight: 0,
+          roundNine: 0,
+          roundTen: 0,
           throwNumber: 1
         },
         {
           id: 3,
-          firstName: "Adam",
-          surname: "Sime",
+          firstName: "James",
+          surname: "Clark",
           totalScore: 0,
+          roundOne: 0,
+          roundTwo: 0,
+          roundThree: 0,
+          roundFour: 0,
+          roundFive: 0,
+          roundSix: 0,
+          roundSeven: 0,
+          roundEight: 0,
+          roundNine: 0,
+          roundTen: 0,
           throwNumber: 1
         },
         {
           id: 4,
-          firstName: "Andrew",
+          firstName: "Andy",
           surname: "Wright",
           totalScore: 0,
+          roundOne: 0,
+          roundTwo: 0,
+          roundThree: 0,
+          roundFour: 0,
+          roundFive: 0,
+          roundSix: 0,
+          roundSeven: 0,
+          roundEight: 0,
+          roundNine: 0,
+          roundTen: 0,
           throwNumber: 1
         }
       ],
       currentPlayer: 0,
-      text: "parent State"
+      currentRound: 0
     };
   }
 
@@ -52,6 +105,11 @@ export default class App extends Component {
     let playe = this.state.currentPlayer;
     let play = document.getElementById(playe);
     play.style.display = "block";
+    M.AutoInit();
+  }
+
+  endGame() {
+    console.log("end game");
   }
 
   zeroPoints = () => {
@@ -60,9 +118,9 @@ export default class App extends Component {
 
     players = Object.assign(this.state.players);
 
-    let numPlayers = players.length;
+    let numPlayers = players.length - 1;
 
-    if (currentPlayer === numPlayers - 1) {
+    if (currentPlayer === numPlayers) {
       this.setState({ currentPlayer: 0 });
     } else {
       this.setState({ currentPlayer: this.state.currentPlayer + 1 });
@@ -79,12 +137,13 @@ export default class App extends Component {
   onePoints = () => {
     let players = [];
     let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].throwNumber;
 
     players = Object.assign(this.state.players);
 
-    let numPlayers = players.length;
+    let numPlayers = players.length - 1;
 
-    if (currentPlayer === numPlayers - 1) {
+    if (currentPlayer === numPlayers) {
       this.setState({ currentPlayer: 0 });
     } else {
       this.setState({ currentPlayer: this.state.currentPlayer + 1 });
@@ -94,21 +153,25 @@ export default class App extends Component {
       this.state.players[currentPlayer].throwNumber + 1;
     players[currentPlayer].totalScore =
       this.state.players[currentPlayer].totalScore + 1;
+
     this.setState({ players });
 
     console.log(players[currentPlayer]);
     this.playerchange(currentPlayer, numPlayers);
+
+    this.roundScore(1, currentPlayer, round, players);
   };
 
   threePoints = () => {
     let players = [];
     let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].throwNumber;
 
     players = Object.assign(this.state.players);
 
-    let numPlayers = players.length;
+    let numPlayers = players.length - 1;
 
-    if (currentPlayer === numPlayers - 1) {
+    if (currentPlayer === numPlayers) {
       this.setState({ currentPlayer: 0 });
     } else {
       this.setState({ currentPlayer: this.state.currentPlayer + 1 });
@@ -122,17 +185,19 @@ export default class App extends Component {
 
     console.log(players[currentPlayer]);
     this.playerchange(currentPlayer, numPlayers);
+    this.roundScore(3, currentPlayer, round, players);
   };
 
   fivePoints = () => {
     let players = [];
     let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].throwNumber;
 
     players = Object.assign(this.state.players);
 
-    let numPlayers = players.length;
+    let numPlayers = players.length - 1;
 
-    if (currentPlayer === numPlayers - 1) {
+    if (currentPlayer === numPlayers) {
       this.setState({ currentPlayer: 0 });
     } else {
       this.setState({ currentPlayer: this.state.currentPlayer + 1 });
@@ -146,17 +211,19 @@ export default class App extends Component {
 
     console.log(players[currentPlayer]);
     this.playerchange(currentPlayer, numPlayers);
+    this.roundScore(5, currentPlayer, round, players);
   };
 
   sevenPoints = () => {
     let players = [];
     let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].throwNumber;
 
     players = Object.assign(this.state.players);
 
-    let numPlayers = players.length;
+    let numPlayers = players.length - 1;
 
-    if (currentPlayer === numPlayers - 1) {
+    if (currentPlayer === numPlayers) {
       this.setState({ currentPlayer: 0 });
     } else {
       this.setState({ currentPlayer: this.state.currentPlayer + 1 });
@@ -170,13 +237,14 @@ export default class App extends Component {
 
     //  console.log(players[currentPlayer]);
     this.playerchange(currentPlayer, numPlayers);
+    this.roundScore(7, currentPlayer, round, players);
   };
 
   playerchange(currentPlayer, numPlayers) {
     let nextPlayer = document.getElementById(currentPlayer + 1);
     let previousPlayer = document.getElementById(currentPlayer);
     let reset = document.getElementById(0);
-    if (currentPlayer === numPlayers - 1) {
+    if (currentPlayer === numPlayers) {
       previousPlayer.style.display = "none";
       reset.style.display = "block";
       console.log("New Round");
@@ -193,51 +261,102 @@ export default class App extends Component {
     }
   }
 
+  roundScore(score, currentPlayer, round, players) {
+    console.log("score:", score);
+    console.log("Player:", currentPlayer);
+    console.log("Round:", round);
+    console.log("players:", players);
+
+    switch (round) {
+      case 1:
+        players[currentPlayer].roundOne = this.state.players[
+          currentPlayer
+        ].roundOne = score;
+        break;
+      case 2:
+        players[currentPlayer].roundTwo = this.state.players[
+          currentPlayer
+        ].roundTwo = score;
+        break;
+      case 3:
+        players[currentPlayer].roundThree = this.state.players[
+          currentPlayer
+        ].roundThree = score;
+        break;
+      case 4:
+        players[currentPlayer].roundFour = this.state.players[
+          currentPlayer
+        ].roundFour = score;
+        break;
+      case 5:
+        players[currentPlayer].roundFive = this.state.players[
+          currentPlayer
+        ].roundFive = score;
+        break;
+      case 6:
+        players[currentPlayer].roundSix = this.state.players[
+          currentPlayer
+        ].roundSix = score;
+        break;
+      case 7:
+        players[currentPlayer].roundSeven = this.state.players[
+          currentPlayer
+        ].roundSeven = score;
+        break;
+      case 8:
+        players[currentPlayer].roundEight = this.state.players[
+          currentPlayer
+        ].roundEight = score;
+        break;
+      case 9:
+        players[currentPlayer].roundNine = this.state.players[
+          currentPlayer
+        ].roundNine = score;
+        break;
+      case 10:
+        players[currentPlayer].roundTen = this.state.players[
+          currentPlayer
+        ].roundTen = score;
+        break;
+      default:
+    }
+  }
+
   render() {
     var shown = {
       display: this.state.shown ? "block" : "none"
     };
 
     return (
-      <div>
-        <h1>Axe Thorwers Anonymous</h1>
+      <div className="bg">
+        <div className="container">
+          <h1>Axe Throwers Anonymous</h1>
 
-        <Scoreboard players={this.state.players} />
+          <Scoreboard players={this.state.players} />
 
-        <h2>Scores</h2>
-        <ul>
-          {this.state.players.map(players => (
-            <li key={players.id} style={shown} id={players.id}>
-              <p>
-                Player: {players.firstName} {players.surname}
-              </p>
-              <p> id: {players.id} </p>
-              {/* <p>Current Score: {players.totalScore}</p> */}
-              <p>Throw: {players.throwNumber}</p>
-              <Button
-                title={"No Points"}
-                task={this.zeroPoints}
-                playerid={players.id}
-              />
-              <Button
-                title={"1 point"}
-                task={this.onePoints}
-                playerid={players.id}
-              />
-              <Button title={"3 points"} task={this.threePoints} />
-              <Button
-                title={"5 points"}
-                task={this.fivePoints}
-                playerid={players.id}
-              />
-              <Button
-                title={"7 points"}
-                task={this.sevenPoints}
-                playerid={players.id}
-              />
-            </li>
-          ))}
-        </ul>
+          <ul>
+            {this.state.players.map(players => (
+              <li
+                key={players.id}
+                style={shown}
+                id={players.id}
+                className="logpoints"
+              >
+                <h3>
+                  Now Throwing : {players.firstName} {players.surname}
+                </h3>
+                {/* <p>Current Score: {players.totalScore}</p> */}
+                <p>This is Throw Number: {players.throwNumber}</p>
+                <p>What Did You Score?</p>
+                <Button title={"No Points"} task={this.zeroPoints} />
+                <Button title={"1 point"} task={this.onePoints} />
+                <Button title={"3 points"} task={this.threePoints} />
+                <Button title={"5 points"} task={this.fivePoints} />
+                <Button title={"7 points"} task={this.sevenPoints} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
