@@ -6,7 +6,7 @@ import M from "materialize-css";
 export default class Scoreboard extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...props };
+    this.props = { ...props };
     //  updateText = updateText.bind(this);
   }
 
@@ -17,12 +17,11 @@ export default class Scoreboard extends Component {
   render() {
     return (
       <div>
-        <h2>Scoreboard</h2>
-        <div>
+        <h2 class="flow-text">Scoreboard</h2>
+        <div className="scoreboard">
           <table className="responsive-table light-blue lighten-4">
             <thead>
-              {" "}
-              <tr className="striped">
+              <tr>
                 <th>Player</th>
                 <th>Round One</th>
                 <th>Round Two</th>
@@ -38,7 +37,7 @@ export default class Scoreboard extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.players.map(players => (
+              {this.props.players.map(players => (
                 <tr key={players.id} className="light-blue lighten-5">
                   <td>
                     {players.firstName} {players.surname}

@@ -25,19 +25,23 @@
 
 table {
   color: #232022;
+  border-radius: 5px;
 }
 
 td,
 th {
-  padding-left: 20px;
+  text-align: center;
 }
 
 .bg {
   background-image: url(./img/axe-throwing-img.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100%;
+
   background-attachment: fixed;
+  min-height: 100vh;
+  min-width: 100vh;
+  width: 100%;
 }
 
 h1,
@@ -56,6 +60,24 @@ h3 {
   color: #232022;
   padding: 20px;
   text-align: center;
+  border-radius: 5px;
+}
+.addPlayer {
+  color: #232022;
+}
+
+.modal-close {
+  float: right;
+}
+
+.winnerbox {
+  background-color: #11ee52;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 20px;
+  color: black;
+  text-align: center;
+  display: none;
 }
 
 @keyframes App-logo-spin {

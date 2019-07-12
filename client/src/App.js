@@ -11,77 +11,8 @@ export default class App extends Component {
       players: [
         {
           id: 0,
-          firstName: "Stephen",
-          surname: "Willmot",
-          totalScore: 0,
-          roundOne: 0,
-          roundTwo: 0,
-          roundThree: 0,
-          roundFour: 0,
-          roundFive: 0,
-          roundSix: 0,
-          roundSeven: 0,
-          roundEight: 0,
-          roundNine: 0,
-          roundTen: 0,
-          throwNumber: 1
-        },
-
-        {
-          id: 1,
-          firstName: "Andrew",
-          surname: "Todd",
-          totalScore: 0,
-          roundOne: 0,
-          roundTwo: 0,
-          roundThree: 0,
-          roundFour: 0,
-          roundFive: 0,
-          roundSix: 0,
-          roundSeven: 0,
-          roundEight: 0,
-          roundNine: 0,
-          roundTen: 0,
-          throwNumber: 1
-        },
-        {
-          id: 2,
-          firstName: "Adam",
-          surname: "Sime",
-          totalScore: 0,
-          roundOne: 0,
-          roundTwo: 0,
-          roundThree: 0,
-          roundFour: 0,
-          roundFive: 0,
-          roundSix: 0,
-          roundSeven: 0,
-          roundEight: 0,
-          roundNine: 0,
-          roundTen: 0,
-          throwNumber: 1
-        },
-        {
-          id: 3,
-          firstName: "James",
-          surname: "Clark",
-          totalScore: 0,
-          roundOne: 0,
-          roundTwo: 0,
-          roundThree: 0,
-          roundFour: 0,
-          roundFive: 0,
-          roundSix: 0,
-          roundSeven: 0,
-          roundEight: 0,
-          roundNine: 0,
-          roundTen: 0,
-          throwNumber: 1
-        },
-        {
-          id: 4,
-          firstName: "Andy",
-          surname: "Wright",
+          firstName: "",
+          surname: "",
           totalScore: 0,
           roundOne: 0,
           roundTwo: 0,
@@ -97,11 +28,85 @@ export default class App extends Component {
         }
       ],
       currentPlayer: 0,
-      currentRound: 0
+      currentRound: 0,
+      winner: "",
+      addFirstName: "",
+      addSurname: "",
+      newId: 0
     };
+
+    this.handleChange = this.handleChange.bind(this);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount(currentPlayer) {
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(event, state, numPlayers) {
+    event.preventDefault();
+    let firstName = this.state.addFirstName;
+    let surname = this.state.addSurname;
+
+    let newId = this.state.newId;
+    if (newId === 0) {
+      this.setState({
+        players: [
+          {
+            id: newId,
+            firstName: firstName,
+            surname: surname,
+            totalScore: 0,
+            roundOne: 0,
+            roundTwo: 0,
+            roundThree: 0,
+            roundFour: 0,
+            roundFive: 0,
+            roundSix: 0,
+            roundSeven: 0,
+            roundEight: 0,
+            roundNine: 0,
+            roundTen: 0,
+            throwNumber: 1
+          }
+        ]
+      });
+      this.state.newId = this.state.newId + 1;
+    } else if (newId > 0) {
+      this.setState(prevState => ({
+        players: [
+          ...prevState.players,
+          {
+            id: newId,
+            firstName: firstName,
+            surname: surname,
+            totalScore: 0,
+            roundOne: 0,
+            roundTwo: 0,
+            roundThree: 0,
+            roundFour: 0,
+            roundFive: 0,
+            roundSix: 0,
+            roundSeven: 0,
+            roundEight: 0,
+            roundNine: 0,
+            roundTen: 0,
+            throwNumber: 1
+          }
+        ]
+      }));
+      this.state.newId = this.state.newId + 1;
+    }
+  }
+
+  componentDidMount() {
     let playe = this.state.currentPlayer;
     let play = document.getElementById(playe);
     play.style.display = "block";
@@ -109,12 +114,22 @@ export default class App extends Component {
   }
 
   endGame() {
-    console.log("end game");
+    let winner = this.state.players.slice().sort((a, b) => {
+      return b.totalScore - a.totalScore;
+    })[0];
+
+    this.setState({
+      winner: `Congratulations ${winner.firstName}
+          ${winner.surname} you Won With ${winner.totalScore} points`
+    });
+    let winnerbox = document.getElementById("winnerbox");
+    winnerbox.style.display = "block";
   }
 
   zeroPoints = () => {
     let players = [];
     let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].throwNumber;
 
     players = Object.assign(this.state.players);
 
@@ -131,7 +146,7 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
-    this.playerchange(currentPlayer, numPlayers);
+    this.playerchange(currentPlayer, numPlayers, round);
   };
 
   onePoints = () => {
@@ -157,9 +172,9 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
-    this.playerchange(currentPlayer, numPlayers);
 
     this.roundScore(1, currentPlayer, round, players);
+    this.playerchange(currentPlayer, numPlayers, round);
   };
 
   threePoints = () => {
@@ -184,8 +199,8 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
-    this.playerchange(currentPlayer, numPlayers);
     this.roundScore(3, currentPlayer, round, players);
+    this.playerchange(currentPlayer, numPlayers, round);
   };
 
   fivePoints = () => {
@@ -210,8 +225,8 @@ export default class App extends Component {
     this.setState({ players });
 
     console.log(players[currentPlayer]);
-    this.playerchange(currentPlayer, numPlayers);
     this.roundScore(5, currentPlayer, round, players);
+    this.playerchange(currentPlayer, numPlayers, round);
   };
 
   sevenPoints = () => {
@@ -236,20 +251,27 @@ export default class App extends Component {
     this.setState({ players });
 
     //  console.log(players[currentPlayer]);
-    this.playerchange(currentPlayer, numPlayers);
+
     this.roundScore(7, currentPlayer, round, players);
+    this.playerchange(currentPlayer, numPlayers, round);
   };
 
-  playerchange(currentPlayer, numPlayers) {
+  playerchange(currentPlayer, numPlayers, round) {
     let nextPlayer = document.getElementById(currentPlayer + 1);
     let previousPlayer = document.getElementById(currentPlayer);
     let reset = document.getElementById(0);
-    if (currentPlayer === numPlayers) {
+    if (currentPlayer === numPlayers && round !== 10) {
       previousPlayer.style.display = "none";
       reset.style.display = "block";
       console.log("New Round");
       console.log(numPlayers);
       console.log(currentPlayer);
+      console.log(round);
+    } else if (currentPlayer === numPlayers && round === 10) {
+      previousPlayer.style.display = "none";
+      reset.style.display = "block";
+      // call end game function here
+      this.endGame();
     } else {
       console.log("Next Player");
 
@@ -328,34 +350,112 @@ export default class App extends Component {
     };
 
     return (
-      <div className="bg">
+      <div className="bg" id="size">
         <div className="container">
-          <h1>Axe Throwers Anonymous</h1>
+          <div class="col s12">
+            <h1>Axe Throwers Anonymous</h1>
 
-          <Scoreboard players={this.state.players} />
+            <Scoreboard players={this.state.players} />
 
-          <ul>
-            {this.state.players.map(players => (
-              <li
-                key={players.id}
-                style={shown}
-                id={players.id}
-                className="logpoints"
-              >
-                <h3>
-                  Now Throwing : {players.firstName} {players.surname}
-                </h3>
-                {/* <p>Current Score: {players.totalScore}</p> */}
-                <p>This is Throw Number: {players.throwNumber}</p>
-                <p>What Did You Score?</p>
-                <Button title={"No Points"} task={this.zeroPoints} />
-                <Button title={"1 point"} task={this.onePoints} />
-                <Button title={"3 points"} task={this.threePoints} />
-                <Button title={"5 points"} task={this.fivePoints} />
-                <Button title={"7 points"} task={this.sevenPoints} />
-              </li>
-            ))}
-          </ul>
+            <a
+              class="waves-effect waves-light btn modal-trigger"
+              href="#modal1"
+            >
+              Add Player
+            </a>
+            <div className="winnerbox" id="winnerbox">
+              <h1>{this.state.winner}</h1>
+            </div>
+
+            <div id="modal1" class="modal">
+              <div class="modal-content">
+                {" "}
+                <a class="btn-floating btn-small waves-effect waves-light red modal-close">
+                  <i class="material-icons">x</i>
+                </a>
+                <h3 className="addPlayer">Add Player</h3>
+                <form className="form" onSubmit={this.handleSubmit}>
+                  <br />
+                  <br />
+
+                  <span className="title">
+                    {" "}
+                    <label className="label">First Name</label>{" "}
+                  </span>
+
+                  <input
+                    className="firstName"
+                    type="text"
+                    name="addFirstName"
+                    value={this.state.addFirstName}
+                    onChange={this.handleChange}
+                  />
+
+                  <span className="title">
+                    {" "}
+                    <label className="label">Surname</label>{" "}
+                  </span>
+
+                  <input
+                    className="input"
+                    type="text"
+                    name="addSurname"
+                    value={this.state.addSurname}
+                    onChange={this.handleChange}
+                  />
+
+                  <button
+                    className="btn waves-effect waves-light blue"
+                    type="submit"
+                    name="action"
+                  >
+                    Add
+                    <i className="material-icons right" />
+                  </button>
+                </form>
+              </div>
+            </div>
+            <ul>
+              {this.state.players.map(players => (
+                <li
+                  key={players.id}
+                  style={shown}
+                  id={players.id}
+                  className="logpoints z-depth-5"
+                >
+                  <h3 class="flow-text">
+                    Now Throwing : {players.firstName} {players.surname}
+                  </h3>
+                  {/* <p>Current Score: {players.totalScore}</p> */}
+                  <p class="flow-text">
+                    This is Throw Number: {players.throwNumber}
+                  </p>
+                  <p class="flow-text">What Did You Score?</p>
+                  <Button title={"No Points"} task={this.zeroPoints} />
+                  <Button
+                    title={"1 point"}
+                    task={this.onePoints}
+                    className="button"
+                  />
+                  <Button
+                    title={"3 points"}
+                    task={this.threePoints}
+                    className="button"
+                  />
+                  <Button
+                    title={"5 points"}
+                    task={this.fivePoints}
+                    className="button"
+                  />
+                  <Button
+                    title={"7 points"}
+                    task={this.sevenPoints}
+                    className="button"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     );
