@@ -52,6 +52,7 @@ export default class App extends Component {
 
   handleSubmit(event, state, numPlayers) {
     event.preventDefault();
+
     let firstName = this.state.addFirstName;
     let surname = this.state.addSurname;
 
@@ -78,7 +79,13 @@ export default class App extends Component {
           }
         ]
       });
-      this.state.newId = this.state.newId + 1;
+      this.setState({ newId: newId + 1 });
+      M.toast({
+        html: "Player Added!",
+        classes: "toastSuccess",
+        displayLength: 1000
+      });
+      this.setState({ addFirstName: "", addSurname: "" });
     } else if (newId > 0) {
       this.setState(prevState => ({
         players: [
@@ -102,7 +109,13 @@ export default class App extends Component {
           }
         ]
       }));
-      this.state.newId = this.state.newId + 1;
+      this.setState({ newId: newId + 1 });
+      M.toast({
+        html: "Player Added!",
+        classes: "toastSuccess",
+        displayLength: 1000
+      });
+      this.setState({ addFirstName: "", addSurname: "" });
     }
   }
 
@@ -119,8 +132,9 @@ export default class App extends Component {
     })[0];
 
     this.setState({
-      winner: `Congratulations ${winner.firstName}
-          ${winner.surname} you Won With ${winner.totalScore} points`
+      winner: `Congratulations
+      ${winner.firstName}
+      ${winner.surname} you Won With ${winner.totalScore} points`
     });
     let winnerbox = document.getElementById("winnerbox");
     winnerbox.style.display = "block";
@@ -352,29 +366,37 @@ export default class App extends Component {
     return (
       <div className="bg" id="size">
         <div className="container">
-          <div class="col s12">
+          <div className="col s12">
             <h1>Axe Throwers Anonymous</h1>
 
             <Scoreboard players={this.state.players} />
 
             <a
-              class="waves-effect waves-light btn modal-trigger"
+              className="waves-effect waves-light btn modal-trigger"
               href="#modal1"
             >
-              Add Player
+              Add Players
             </a>
             <div className="winnerbox" id="winnerbox">
               <h1>{this.state.winner}</h1>
             </div>
 
-            <div id="modal1" class="modal">
-              <div class="modal-content">
+            <div id="modal1" className="modal">
+              <div className="modal-content">
                 {" "}
-                <a class="btn-floating btn-small waves-effect waves-light red modal-close">
-                  <i class="material-icons">x</i>
-                </a>
-                <h3 className="addPlayer">Add Player</h3>
-                <form className="form" onSubmit={this.handleSubmit}>
+                <button className="btn-floating btn-small waves-effect waves-light red modal-close">
+                  x
+                  <i className="material-icons right" />
+                </button>
+                {/* <a className="btn-floating btn-small waves-effect waves-light red modal-close">
+                  <i className="material-icons">x</i>
+                </a> */}
+                <h3 className="addPlayer">Add Players</h3>
+                <form
+                  className="form"
+                  id="addPlayerForm"
+                  onSubmit={this.handleSubmit}
+                >
                   <br />
                   <br />
 
@@ -405,7 +427,7 @@ export default class App extends Component {
                   />
 
                   <button
-                    className="btn waves-effect waves-light blue"
+                    className="waves-effect waves-light btn"
                     type="submit"
                     name="action"
                   >
@@ -423,14 +445,14 @@ export default class App extends Component {
                   id={players.id}
                   className="logpoints z-depth-5"
                 >
-                  <h3 class="flow-text">
+                  <h3 className="flow-text">
                     Now Throwing : {players.firstName} {players.surname}
                   </h3>
                   {/* <p>Current Score: {players.totalScore}</p> */}
-                  <p class="flow-text">
+                  <p className="flow-text">
                     This is Throw Number: {players.throwNumber}
                   </p>
-                  <p class="flow-text">What Did You Score?</p>
+                  <p className="flow-text">What Did You Score?</p>
                   <Button title={"No Points"} task={this.zeroPoints} />
                   <Button
                     title={"1 point"}

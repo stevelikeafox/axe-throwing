@@ -40,7 +40,6 @@ th {
 
   background-attachment: fixed;
   min-height: 100vh;
-  min-width: 100vh;
   width: 100%;
 }
 
@@ -71,13 +70,29 @@ h3 {
 }
 
 .winnerbox {
-  background-color: #11ee52;
+  background-color: #e3f2fd;
   border-radius: 5px;
-  margin: 10px;
+  margin-top: 15px;
   padding: 20px;
   color: black;
   text-align: center;
   display: none;
+}
+
+.toast {
+  margin-top: 200px;
+  position: fixed;
+  left: -webkit-calc(50% - 160px);
+  left: -moz-calc(50% - 160px);
+  left: calc(50% - 160px);
+}
+
+.toastSuccess {
+  background-color: #11ee52;
+  width: 320px;
+  color: black;
+  font-weight: bold;
+  text-align: center;
 }
 
 @keyframes App-logo-spin {

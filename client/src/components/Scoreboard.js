@@ -6,7 +6,7 @@ import M from "materialize-css";
 export default class Scoreboard extends Component {
   constructor(props) {
     super(props);
-    this.props = { ...props };
+    props = { ...props };
     //  updateText = updateText.bind(this);
   }
 
@@ -17,7 +17,7 @@ export default class Scoreboard extends Component {
   render() {
     return (
       <div>
-        <h2 class="flow-text">Scoreboard</h2>
+        <h2 className="flow-text">Scoreboard</h2>
         <div className="scoreboard">
           <table className="responsive-table light-blue lighten-4">
             <thead>
