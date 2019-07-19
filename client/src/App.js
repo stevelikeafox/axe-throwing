@@ -27,6 +27,7 @@ export default class App extends Component {
           throwNumber: 1
         }
       ],
+      draw: [],
       currentPlayer: 0,
       currentRound: 0,
       winner: "",
@@ -127,6 +128,22 @@ export default class App extends Component {
   }
 
   endGame() {
+    let sorted = this.state.players.slice().sort((a, b) => {
+      return b.totalScore - a.totalScore;
+    });
+
+    let playersDraw = [sorted[0]];
+    for (var i = 1; i < sorted.length; i++) {
+      if (sorted[0].totalScore === sorted[i].totalScore) {
+        playersDraw.push(sorted[i]);
+        console.log("It Was A Draw! SUDDEN DEATH!", playersDraw);
+      } else if (sorted[0].totalScore !== sorted[i].totalScore) {
+        this.winner();
+      }
+    }
+    this.setState({ draw: playersDraw });
+  }
+  winner() {
     let winner = this.state.players.slice().sort((a, b) => {
       return b.totalScore - a.totalScore;
     })[0];
