@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import Button from "./components/Buttons";
+import Button2 from "./components/Button2";
+
 import Scoreboard from "./components/Scoreboard";
+import Draw from "./components/Draw";
+
 import M from "materialize-css";
 import "./App.css";
 
@@ -27,13 +31,37 @@ export default class App extends Component {
           throwNumber: 1
         }
       ],
-      draw: [],
+      draw: [
+        {
+          id: 0,
+          firstName: "",
+          surname: "",
+          totalScore: 0,
+          roundOne: 0,
+          roundTwo: 0,
+          roundThree: 0,
+          roundFour: 0,
+          roundFive: 0,
+          roundSix: 0,
+          roundSeven: 0,
+          roundEight: 0,
+          roundNine: 0,
+          roundTen: 0,
+          throwNumber: 1
+        }
+      ],
       currentPlayer: 0,
       currentRound: 0,
       winner: "",
       addFirstName: "",
       addSurname: "",
-      newId: 0
+      newId: 0,
+      drawMessage: "",
+      drawHidden: true,
+      scoreboardHidden: false,
+      showScoring: false,
+      showAddPlayersButton: true,
+      startButton: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -136,13 +164,19 @@ export default class App extends Component {
     for (var i = 1; i < sorted.length; i++) {
       if (sorted[0].totalScore === sorted[i].totalScore) {
         playersDraw.push(sorted[i]);
+        this.setState({
+          draw: playersDraw,
+          drawHidden: false
+        });
         console.log("It Was A Draw! SUDDEN DEATH!", playersDraw);
-      } else if (sorted[0].totalScore !== sorted[i].totalScore) {
+        let vis = document.getElementById("vis");
+        vis.style.visibility = "Hidden";
+      } else if (sorted[0].totalScore !== sorted[1].totalScore) {
         this.winner();
       }
     }
-    this.setState({ draw: playersDraw });
   }
+
   winner() {
     let winner = this.state.players.slice().sort((a, b) => {
       return b.totalScore - a.totalScore;
@@ -155,6 +189,8 @@ export default class App extends Component {
     });
     let winnerbox = document.getElementById("winnerbox");
     winnerbox.style.display = "block";
+    let vis = document.getElementById("vis");
+    vis.style.visibility = "Hidden";
   }
 
   zeroPoints = () => {
@@ -375,9 +411,19 @@ export default class App extends Component {
     }
   }
 
+  startGame = () => {
+    this.setState({
+      showScoring: true,
+      showAddPlayersButton: false,
+      startButton: false
+    });
+    let vis = document.getElementById("vis");
+    vis.style.visibility = "visible";
+  };
+
   render() {
-    var shown = {
-      display: this.state.shown ? "block" : "none"
+    var show = {
+      display: this.state.show ? "block" : "none"
     };
 
     return (
@@ -386,14 +432,30 @@ export default class App extends Component {
           <div className="col s12">
             <h1>Axe Throwers Anonymous</h1>
 
-            <Scoreboard players={this.state.players} />
+            {!this.state.scoreboardHidden && (
+              <Scoreboard players={this.state.players} />
+            )}
 
-            <a
-              className="waves-effect waves-light btn modal-trigger"
-              href="#modal1"
-            >
-              Add Players
-            </a>
+            {this.state.showAddPlayersButton && (
+              <a
+                className="waves-effect waves-light btn modal-trigger"
+                href="#modal1"
+              >
+                Add Players
+              </a>
+            )}
+
+            {this.state.startButton && (
+              <div className="buttonContainer">
+                {" "}
+                <Button2
+                  title={"Start Game!"}
+                  task={this.startGame}
+                  className="button2"
+                />
+              </div>
+            )}
+
             <div className="winnerbox" id="winnerbox">
               <h1>{this.state.winner}</h1>
             </div>
@@ -454,12 +516,15 @@ export default class App extends Component {
                 </form>
               </div>
             </div>
-            <ul>
+
+            {!this.state.drawHidden && <Draw players={this.state.draw} />}
+
+            <ul id="vis">
               {this.state.players.map(players => (
                 <li
                   key={players.id}
-                  style={shown}
                   id={players.id}
+                  style={show}
                   className="logpoints z-depth-5"
                 >
                   <h3 className="flow-text">

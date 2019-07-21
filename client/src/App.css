@@ -94,6 +94,32 @@ h3 {
   font-weight: bold;
   text-align: center;
 }
+#vis {
+  visibility: hidden;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  height: 50vh;
+  width: 50vh;
+  margin: 0 auto;
+}
+
+.button2 {
+  height: 100%;
+  width: 100%;
+  font-size: 3rem;
+}
+
+.suddenDeathText {
+  background-color: #b3e5fc;
+  color: black;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
 
 @keyframes App-logo-spin {
   from {
