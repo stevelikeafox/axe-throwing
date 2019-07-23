@@ -4,7 +4,7 @@ export default class Button2 extends Component {
     let { title, task } = this.props;
     return (
       <button
-        className="btn-floating waves-effect waves-light red button2"
+        className="btn-floating waves-effect waves-light red button2 pulse"
         onClick={task}
       >
         {title}

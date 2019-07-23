@@ -448,11 +448,7 @@ export default class App extends Component {
             {this.state.startButton && (
               <div className="buttonContainer">
                 {" "}
-                <Button2
-                  title={"Start Game!"}
-                  task={this.startGame}
-                  className="button2"
-                />
+                <Button2 title={"Start Game!"} task={this.startGame} />
               </div>
             )}
 
@@ -490,6 +486,7 @@ export default class App extends Component {
                     name="addFirstName"
                     value={this.state.addFirstName}
                     onChange={this.handleChange}
+                    required
                   />
 
                   <span className="title">
@@ -503,6 +500,7 @@ export default class App extends Component {
                     name="addSurname"
                     value={this.state.addSurname}
                     onChange={this.handleChange}
+                    required
                   />
 
                   <button
