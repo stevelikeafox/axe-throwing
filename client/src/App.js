@@ -15,6 +15,7 @@ export default class App extends Component {
       players: [
         {
           id: 0,
+          drawId: "0tracker",
           firstName: "",
           surname: "",
           totalScore: 0,
@@ -28,15 +29,18 @@ export default class App extends Component {
           roundEight: 0,
           roundNine: 0,
           roundTen: 0,
-          throwNumber: 1
+          throwNumber: 1,
+          suddenDeathScore: 0
         }
       ],
       draw: [
         {
           id: 0,
+          drawId: "0tracker",
           firstName: "",
           surname: "",
           totalScore: 0,
+          suddenDeathScore: 0,
           roundOne: 0,
           roundTwo: 0,
           roundThree: 0,
@@ -61,7 +65,9 @@ export default class App extends Component {
       scoreboardHidden: false,
       showScoring: false,
       showAddPlayersButton: true,
-      startButton: true
+      startButton: true,
+      visibility: "none",
+      scoringHidden: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -91,6 +97,8 @@ export default class App extends Component {
         players: [
           {
             id: newId,
+            drawId: "0tracker",
+
             firstName: firstName,
             surname: surname,
             totalScore: 0,
@@ -104,7 +112,8 @@ export default class App extends Component {
             roundEight: 0,
             roundNine: 0,
             roundTen: 0,
-            throwNumber: 1
+            throwNumber: 1,
+            suddenDeathScore: 0
           }
         ]
       });
@@ -121,6 +130,8 @@ export default class App extends Component {
           ...prevState.players,
           {
             id: newId,
+            drawId: "0tracker",
+
             firstName: firstName,
             surname: surname,
             totalScore: 0,
@@ -134,7 +145,8 @@ export default class App extends Component {
             roundEight: 0,
             roundNine: 0,
             roundTen: 0,
-            throwNumber: 1
+            throwNumber: 1,
+            suddenDeathScore: 0
           }
         ]
       }));
@@ -162,15 +174,17 @@ export default class App extends Component {
 
     let playersDraw = [sorted[0]];
     for (var i = 1; i < sorted.length; i++) {
+      console.log(sorted[i].drawId);
       if (sorted[0].totalScore === sorted[i].totalScore) {
+        sorted[i].drawId = i + "tracker";
+
         playersDraw.push(sorted[i]);
         this.setState({
           draw: playersDraw,
           drawHidden: false
         });
         console.log("It Was A Draw! SUDDEN DEATH!", playersDraw);
-        let vis = document.getElementById("vis");
-        vis.style.visibility = "Hidden";
+        this.setState({ visibility: "none" });
       } else if (sorted[0].totalScore !== sorted[1].totalScore) {
         this.winner();
       }
@@ -189,8 +203,7 @@ export default class App extends Component {
     });
     let winnerbox = document.getElementById("winnerbox");
     winnerbox.style.display = "block";
-    let vis = document.getElementById("vis");
-    vis.style.visibility = "Hidden";
+    this.setState({ visibility: "none" });
   }
 
   zeroPoints = () => {
@@ -415,15 +428,20 @@ export default class App extends Component {
     this.setState({
       showScoring: true,
       showAddPlayersButton: false,
-      startButton: false
+      startButton: false,
+      visibility: "block"
     });
-    let vis = document.getElementById("vis");
-    vis.style.visibility = "visible";
+    // let vis = document.getElementById("vis");
+    // vis.style.visibility = "visible";
   };
 
   render() {
     var show = {
       display: this.state.show ? "block" : "none"
+    };
+
+    var visibility = {
+      display: this.state.visibility
     };
 
     return (
@@ -438,7 +456,7 @@ export default class App extends Component {
 
             {this.state.showAddPlayersButton && (
               <a
-                className="waves-effect waves-light btn modal-trigger"
+                className="waves-effect waves-light btn modal-trigger addPlayers pulseSquare"
                 href="#modal1"
               >
                 Add Players
@@ -504,7 +522,7 @@ export default class App extends Component {
                   />
 
                   <button
-                    className="waves-effect waves-light btn"
+                    className="waves-effect waves-light btn playerAdd"
                     type="submit"
                     name="action"
                   >
@@ -517,7 +535,7 @@ export default class App extends Component {
 
             {!this.state.drawHidden && <Draw players={this.state.draw} />}
 
-            <ul id="vis">
+            <ul id="vis" style={visibility}>
               {this.state.players.map(players => (
                 <li
                   key={players.id}
@@ -534,26 +552,10 @@ export default class App extends Component {
                   </p>
                   <p className="flow-text">What Did You Score?</p>
                   <Button title={"No Points"} task={this.zeroPoints} />
-                  <Button
-                    title={"1 point"}
-                    task={this.onePoints}
-                    className="button"
-                  />
-                  <Button
-                    title={"3 points"}
-                    task={this.threePoints}
-                    className="button"
-                  />
-                  <Button
-                    title={"5 points"}
-                    task={this.fivePoints}
-                    className="button"
-                  />
-                  <Button
-                    title={"7 points"}
-                    task={this.sevenPoints}
-                    className="button"
-                  />
+                  <Button title={"1 point"} task={this.onePoints} />
+                  <Button title={"3 points"} task={this.threePoints} />
+                  <Button title={"5 points"} task={this.fivePoints} />
+                  <Button title={"7 points"} task={this.sevenPoints} />
                 </li>
               ))}
             </ul>

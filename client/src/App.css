@@ -41,6 +41,7 @@ th {
   background-attachment: fixed;
   min-height: 100vh;
   width: 100%;
+  padding-bottom: 50px;
 }
 
 h1,
@@ -63,6 +64,57 @@ h3 {
 }
 .addPlayer {
   color: #232022;
+}
+
+.playerAdd,
+.playerAdd:hover,
+.playerAdd:active,
+.playerAdd:focus,
+.playerAdd:visited,
+.playerAdd:after,
+.playerAdd:before {
+  background-color: #f44336;
+}
+
+.addPlayers:focus,
+.addPlayers:visited,
+.addPlayers:after,
+.addPlayers:before {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  width: 25%;
+  height: 7vh;
+}
+
+.addPlayers:active {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  width: 25%;
+  height: 7vh;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+  transform: translate3d(0, 1px, 0);
+}
+
+.addPlayers:hover {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  width: 25%;
+  height: 7vh;
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.5);
+  transform: translate3d(0, -2px, 0);
+}
+
+.addPlayers {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  width: 25%;
+  height: 7vh;
+  box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.5);
+  padding-top: 1.5vh;
 }
 
 .modal-close {
@@ -95,7 +147,8 @@ h3 {
   text-align: center;
 }
 #vis {
-  visibility: hidden;
+  /* visibility: hidden; */
+  margin-bottom: 0;
 }
 
 .buttonContainer {
@@ -150,7 +203,7 @@ h3 {
   will-change: transform;
 }
 .button2:hover {
-  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.5);
   transform: translate3d(0, -2px, 0);
 }
 
@@ -191,6 +244,35 @@ h3 {
 }
 .pulse:hover:before,
 .pulse:hover:after {
+  display: none;
+}
+
+.pulseSquare {
+  position: relative;
+  overflow: hidden;
+}
+.pulseSquare:before,
+.pulseSquare:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.4);
+  width: 30%;
+  height: 30%;
+  opacity: 0;
+  margin: auto;
+}
+.pulseSquare:before {
+  animation: pulse 1.5s infinite linear;
+}
+.pulseSquare:after {
+  animation: pulse 2s 0.4s infinite linear;
+}
+.pulseSquare:hover:before,
+.pulseSquare:hover:after {
   display: none;
 }
 
