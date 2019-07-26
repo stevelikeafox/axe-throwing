@@ -48,6 +48,197 @@ export default class Draw extends Component {
     play.style.display = "block";
   }
 
+  zeroPoints = () => {
+    let players = [];
+    let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].suddenDeathThrowNumber;
+
+    players = Object.assign(this.state.players);
+
+    let numPlayers = players.length - 1;
+
+    if (currentPlayer === numPlayers) {
+      this.setState({ currentPlayer: 0 });
+    } else {
+      this.setState({ currentPlayer: this.state.currentPlayer + 1 });
+    }
+
+    players[currentPlayer].suddenDeathThrowNumber =
+      this.state.players[currentPlayer].suddenDeathThrowNumber + 1;
+    this.setState({ players });
+
+    console.log(players[currentPlayer]);
+    this.playerchange(currentPlayer, numPlayers, round);
+  };
+
+  onePoints = () => {
+    let players = [];
+    let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].suddenDeathThrowNumber;
+
+    players = Object.assign(this.state.players);
+
+    let numPlayers = players.length - 1;
+
+    if (currentPlayer === numPlayers) {
+      this.setState({ currentPlayer: 0 });
+    } else {
+      this.setState({ currentPlayer: this.state.currentPlayer + 1 });
+    }
+
+    players[currentPlayer].suddenDeathThrowNumber =
+      this.state.players[currentPlayer].suddenDeathThrowNumber + 1;
+    players[currentPlayer].suddenDeathScore =
+      this.state.players[currentPlayer].suddenDeathScore + 1;
+
+    this.setState({ players });
+
+    console.log(players[currentPlayer]);
+
+    this.playerchange(currentPlayer, numPlayers, round);
+  };
+
+  threePoints = () => {
+    let players = [];
+    let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].suddenDeathThrowNumber;
+
+    players = Object.assign(this.state.players);
+
+    let numPlayers = players.length - 1;
+
+    if (currentPlayer === numPlayers) {
+      this.setState({ currentPlayer: 0 });
+    } else {
+      this.setState({ currentPlayer: this.state.currentPlayer + 1 });
+    }
+
+    players[currentPlayer].suddenDeathThrowNumber =
+      this.state.players[currentPlayer].suddenDeathThrowNumber + 1;
+    players[currentPlayer].suddenDeathScore =
+      this.state.players[currentPlayer].suddenDeathScore + 3;
+
+    this.setState({ players });
+
+    console.log(players[currentPlayer]);
+
+    this.playerchange(currentPlayer, numPlayers, round);
+  };
+
+  fivePoints = () => {
+    let players = [];
+    let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].suddenDeathThrowNumber;
+
+    players = Object.assign(this.state.players);
+
+    let numPlayers = players.length - 1;
+
+    if (currentPlayer === numPlayers) {
+      this.setState({ currentPlayer: 0 });
+    } else {
+      this.setState({ currentPlayer: this.state.currentPlayer + 1 });
+    }
+
+    players[currentPlayer].suddenDeathThrowNumber =
+      this.state.players[currentPlayer].suddenDeathThrowNumber + 1;
+    players[currentPlayer].suddenDeathScore =
+      this.state.players[currentPlayer].suddenDeathScore + 5;
+
+    this.setState({ players });
+
+    console.log(players[currentPlayer]);
+
+    this.playerchange(currentPlayer, numPlayers, round);
+  };
+
+  sevenPoints = () => {
+    let players = [];
+    let currentPlayer = this.state.currentPlayer;
+    let round = this.state.players[currentPlayer].suddenDeathThrowNumber;
+
+    players = Object.assign(this.state.players);
+
+    let numPlayers = players.length - 1;
+
+    if (currentPlayer === numPlayers) {
+      this.setState({ currentPlayer: 0 });
+    } else {
+      this.setState({ currentPlayer: this.state.currentPlayer + 1 });
+    }
+
+    players[currentPlayer].suddenDeathThrowNumber =
+      this.state.players[currentPlayer].suddenDeathThrowNumber + 1;
+    players[currentPlayer].suddenDeathScore =
+      this.state.players[currentPlayer].suddenDeathScore + 7;
+
+    this.setState({ players });
+
+    console.log(players[currentPlayer]);
+
+    this.playerchange(currentPlayer, numPlayers, round);
+  };
+
+  playerchange(currentPlayer, numPlayers, round) {
+    let nextPlayer = document.getElementById(currentPlayer + 1 + "tracker");
+    let previousPlayer = document.getElementById(currentPlayer + "tracker");
+    let reset = document.getElementById("0tracker");
+
+    if (currentPlayer === numPlayers) {
+      previousPlayer.style.display = "none";
+      reset.style.display = "block";
+      console.log("New Round");
+      console.log(numPlayers);
+      console.log(currentPlayer);
+      console.log(round);
+
+      //sort by total score
+      let sorted = this.state.players.slice().sort((a, b) => {
+        return b.suddenDeathScore - a.suddenDeathScore;
+      });
+
+      console.log(sorted);
+      // check each total score against [0]
+      for (let i = 0; i < sorted.length; i++) {
+        if (sorted.suddenDeathScore) {
+        }
+      }
+
+      //       var array = ['mario','luigi','kong'],
+      // index = 1; // your index here
+      // array.splice(index + 1, array.length - (index + 1) );
+
+      // remove array items from total score if less
+
+      // return new array
+
+      // if new array.length == 1 show winner message.
+    } else {
+      console.log("Next Player");
+
+      nextPlayer.style.display = "block";
+      previousPlayer.style.display = "none";
+      console.log(numPlayers);
+      // console.log(previousplay);
+      console.log(currentPlayer);
+    }
+  }
+
+  winner() {
+    let winner = this.state.players.slice().sort((a, b) => {
+      return b.totalScore - a.totalScore;
+    })[0];
+
+    this.setState({
+      winner: `Congratulations
+      ${winner.firstName}
+      ${winner.surname} you Won With ${winner.totalScore} points`
+    });
+    let winnerbox = document.getElementById("winnerbox");
+    winnerbox.style.display = "block";
+    this.setState({ visibility: "none" });
+  }
+
   render() {
     var show = {
       display: this.state.show ? "block" : "none"
@@ -110,7 +301,7 @@ export default class Draw extends Component {
               </h3>
               {/* <p>Current Score: {players.totalScore}</p> */}
               <p className="flow-text">
-                This is Throw Number: {players.throwNumber}
+                This is Throw Number: {players.suddenDeathThrowNumber}
               </p>
               <p className="flow-text">What Did You Score?</p>
               <Button title={"No Points"} task={this.zeroPoints} />

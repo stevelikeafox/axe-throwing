@@ -30,6 +30,7 @@ export default class App extends Component {
           roundNine: 0,
           roundTen: 0,
           throwNumber: 1,
+          suddenDeathThrowNumber: 1,
           suddenDeathScore: 0
         }
       ],
@@ -51,7 +52,8 @@ export default class App extends Component {
           roundEight: 0,
           roundNine: 0,
           roundTen: 0,
-          throwNumber: 1
+          throwNumber: 1,
+          suddenDeathThrowNumber: 1
         }
       ],
       currentPlayer: 0,
@@ -113,7 +115,8 @@ export default class App extends Component {
             roundNine: 0,
             roundTen: 0,
             throwNumber: 1,
-            suddenDeathScore: 0
+            suddenDeathScore: 0,
+            suddenDeathThrowNumber: 1
           }
         ]
       });
@@ -146,7 +149,8 @@ export default class App extends Component {
             roundNine: 0,
             roundTen: 0,
             throwNumber: 1,
-            suddenDeathScore: 0
+            suddenDeathScore: 0,
+            suddenDeathThrowNumber: 1
           }
         ]
       }));
