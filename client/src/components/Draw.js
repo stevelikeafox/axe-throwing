@@ -200,13 +200,9 @@ export default class Draw extends Component {
       console.log(sorted);
       // check each total score against [0]
       for (let i = 0; i < sorted.length; i++) {
-        if (sorted.suddenDeathScore) {
+        if (sorted[0].suddenDeathScore) {
         }
       }
-
-      //       var array = ['mario','luigi','kong'],
-      // index = 1; // your index here
-      // array.splice(index + 1, array.length - (index + 1) );
 
       // remove array items from total score if less
 
