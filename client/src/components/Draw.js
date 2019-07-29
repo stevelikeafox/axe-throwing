@@ -14,6 +14,8 @@ export default class Draw extends Component {
       showAddPlayersButton: false,
       showScoring: false,
       currentPlayer: 0,
+      visibility: "none",
+      winner: "",
       visibility: "none"
     };
     //  updateText = updateText.bind(this);
@@ -26,9 +28,8 @@ export default class Draw extends Component {
       this.state.players[i].drawId = i + "tracker";
       console.log("Player ID:", this.state.players[i].id);
       console.log("Player:", this.state.players);
-
-      M.AutoInit();
     }
+    M.AutoInit();
   }
 
   startSuddenDeath = () => {
@@ -182,9 +183,10 @@ export default class Draw extends Component {
   playerchange(currentPlayer, numPlayers, round) {
     let nextPlayer = document.getElementById(currentPlayer + 1 + "tracker");
     let previousPlayer = document.getElementById(currentPlayer + "tracker");
-    let reset = document.getElementById("0tracker");
+    let reset = document.getElementById(0 + "tracker");
 
     if (currentPlayer === numPlayers) {
+      console.log(this.state.players.length);
       previousPlayer.style.display = "none";
       reset.style.display = "block";
       console.log("New Round");
@@ -199,8 +201,27 @@ export default class Draw extends Component {
 
       console.log(sorted);
       // check each total score against [0]
-      for (let i = 0; i < sorted.length; i++) {
-        if (sorted[0].suddenDeathScore) {
+      for (let i = 1; i < sorted.length; i++) {
+        if (sorted[0].suddenDeathScore === sorted[i].suddenDeathScore) {
+          console.log("Still a draw!");
+        } else if (sorted[0].suddenDeathScore > sorted[i].suddenDeathScore) {
+          sorted = sorted.slice(0, i);
+
+          let playerLength2 = sorted.length;
+          for (let j = 0; j < playerLength2; j++) {
+            sorted[j].id = j;
+            sorted[j].drawId = j + "tracker";
+            console.log("Player ID:", sorted[j].id);
+          }
+
+          console.log("player out!", sorted);
+          this.setState({
+            players: sorted
+          });
+          if (sorted.length === 1) {
+            console.log("Winner: ", sorted);
+            this.winner(sorted);
+          }
         }
       }
 
@@ -211,7 +232,6 @@ export default class Draw extends Component {
       // if new array.length == 1 show winner message.
     } else {
       console.log("Next Player");
-
       nextPlayer.style.display = "block";
       previousPlayer.style.display = "none";
       console.log(numPlayers);
@@ -220,17 +240,18 @@ export default class Draw extends Component {
     }
   }
 
-  winner() {
-    let winner = this.state.players.slice().sort((a, b) => {
-      return b.totalScore - a.totalScore;
-    })[0];
-
+  winner(sorted) {
+    let winner = sorted[0];
+    console.log(winner);
     this.setState({
       winner: `Congratulations
       ${winner.firstName}
-      ${winner.surname} you Won With ${winner.totalScore} points`
+      ${winner.surname} you Won Sudden Death!`,
+      winner2: `Your Sudden Death Score was ${
+        winner.suddenDeathScore
+      } and your main Score was ${winner.totalScore}`
     });
-    let winnerbox = document.getElementById("winnerbox");
+    let winnerbox = document.getElementById("winnerbox2");
     winnerbox.style.display = "block";
     this.setState({ visibility: "none" });
   }
@@ -248,6 +269,11 @@ export default class Draw extends Component {
       <div>
         <h2 className="flow-text">Sudden Death</h2>
         <div className="scoreboard">
+          <div className="winnerbox2" id="winnerbox2">
+            <h1>{this.state.winner}</h1>
+            <p1>{this.state.winner2}</p1>
+          </div>
+
           <div className="suddenDeathText">
             It is a tie! In a tie a "Sudden Death" throw is made for the highest
             score, sudden death throws are done until one thrower scores higher

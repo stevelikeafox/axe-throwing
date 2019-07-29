@@ -131,6 +131,16 @@ h3 {
   display: none;
 }
 
+.winnerbox2 {
+  background-color: #e3f2fd;
+  border-radius: 5px;
+  margin-top: 15px;
+  padding: 20px;
+  color: black;
+  text-align: center;
+  display: none;
+}
+
 .toast {
   margin-top: 200px;
   position: fixed;
