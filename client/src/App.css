@@ -44,6 +44,21 @@ th {
   padding-bottom: 50px;
 }
 
+#root {
+  overflow: hidden;
+}
+
+.container2 {
+  padding: 2rem 2rem 2rem 2rem;
+}
+h1 {
+  font-size: 7vmin;
+}
+
+.flow-text {
+  font-size: 6vmin;
+}
+
 h1,
 h3 {
   margin: 0 0 0 0;
@@ -83,16 +98,16 @@ h3 {
   background-color: #f44336;
   color: white;
   font-weight: bold;
-  width: 25%;
-  height: 7vh;
+  font-size: 2vmin;
+  height: auto;
 }
 
 .addPlayers:active {
   background-color: #f44336;
   color: white;
   font-weight: bold;
-  width: 25%;
-  height: 7vh;
+  font-size: 2vmin;
+  height: auto;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
   transform: translate3d(0, 1px, 0);
 }
@@ -101,8 +116,8 @@ h3 {
   background-color: #f44336;
   color: white;
   font-weight: bold;
-  width: 25%;
-  height: 7vh;
+  font-size: 2vmin;
+  height: auto;
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.5);
   transform: translate3d(0, -2px, 0);
 }
@@ -111,10 +126,10 @@ h3 {
   background-color: #f44336;
   color: white;
   font-weight: bold;
-  width: 25%;
-  height: 7vh;
   box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.5);
-  padding-top: 1.5vh;
+  padding-top: 5px;
+  font-size: 2vmin;
+  height: auto;
 }
 
 .modal-close {
@@ -135,6 +150,8 @@ h3 {
   background-color: #e3f2fd;
   border-radius: 5px;
   margin-top: 15px;
+  margin-bottom: 15px;
+
   padding: 20px;
   color: black;
   text-align: center;
@@ -169,12 +186,6 @@ h3 {
   margin: 0 auto;
 }
 
-.button2 {
-  height: 80%;
-  width: 80%;
-  font-size: 3rem;
-}
-
 .suddenDeathText {
   background-color: #b3e5fc;
   color: black;
@@ -182,6 +193,10 @@ h3 {
   padding: 10px;
   border-radius: 5px;
   font-weight: bold;
+}
+
+#table {
+  padding-bottom: 15px;
 }
 
 @keyframes pulse {
@@ -201,7 +216,6 @@ h3 {
 
 .button2 {
   margin-top: 30px;
-  display: inline-flex;
   align-items: center;
   box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.5);
   padding: 0 30px;
@@ -211,7 +225,44 @@ h3 {
   text-decoration: none;
   transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
   will-change: transform;
+  height: 80%;
+  width: 80%;
+  font-size: 3vmin;
+  position: relative;
 }
+
+@media only screen and (max-width: 420px) {
+  .button2 {
+    margin-top: 30px;
+    align-items: center;
+    box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.5);
+    padding: 0 30px;
+    color: #fff;
+    font-family: Lato, Arial, sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    will-change: transform;
+    height: 50%;
+    width: 50%;
+    font-size: 1.5rem;
+    position: relative;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  #modal1 {
+    width: 100vw;
+    margin: 0;
+    position: absolute;
+    top: 0 !important;
+  }
+
+  .bg {
+    background-image: url(./img/axe-throwing-img-sm.jpg);
+  }
+}
+
 .button2:hover {
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.5);
   transform: translate3d(0, -2px, 0);

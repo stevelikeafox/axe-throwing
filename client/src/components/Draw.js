@@ -14,9 +14,9 @@ export default class Draw extends Component {
       showAddPlayersButton: false,
       showScoring: false,
       currentPlayer: 0,
-      visibility: "none",
       winner: "",
-      visibility: "none"
+      visibility: "none",
+      suddenDeathRules: "block"
     };
     //  updateText = updateText.bind(this);
   }
@@ -253,7 +253,7 @@ export default class Draw extends Component {
     });
     let winnerbox = document.getElementById("winnerbox2");
     winnerbox.style.display = "block";
-    this.setState({ visibility: "none" });
+    this.setState({ visibility: "none", suddenDeathRules: "none" });
   }
 
   render() {
@@ -265,6 +265,10 @@ export default class Draw extends Component {
       display: this.state.visibility
     };
 
+    var suddenDeathRules = {
+      display: this.state.suddenDeathRules
+    };
+
     return (
       <div>
         <h2 className="flow-text">Sudden Death</h2>
@@ -274,7 +278,7 @@ export default class Draw extends Component {
             <p1>{this.state.winner2}</p1>
           </div>
 
-          <div className="suddenDeathText">
+          <div className="suddenDeathText" style={suddenDeathRules}>
             It is a tie! In a tie a "Sudden Death" throw is made for the highest
             score, sudden death throws are done until one thrower scores higher
             than the other.

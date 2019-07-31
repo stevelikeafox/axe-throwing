@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Button from "./components/Buttons";
 import Button2 from "./components/Button2";
+import { BrowserRouter } from "react-router-dom";
 
 import Scoreboard from "./components/Scoreboard";
 import Draw from "./components/Draw";
@@ -450,7 +451,7 @@ export default class App extends Component {
 
     return (
       <div className="bg" id="size">
-        <div className="container">
+        <div className="container2">
           <div className="col s12">
             <h1>Axe Throwers Anonymous</h1>
 

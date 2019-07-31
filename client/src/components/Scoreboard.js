@@ -38,7 +38,11 @@ export default class Scoreboard extends Component {
             </thead>
             <tbody>
               {this.props.players.map(players => (
-                <tr key={players.id} className="light-blue lighten-5">
+                <tr
+                  key={players.id}
+                  className="light-blue lighten-5"
+                  id="table"
+                >
                   <td>
                     {players.firstName} {players.surname}
                     {/* <p> id: {players.id} </p> */}
